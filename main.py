@@ -5,11 +5,9 @@ import constants
 def get_qod():
     api_token = constants.QOD_API_TOKEN
     r = requests.get(constants.QOD_BASE_URL + 'qod.json?category=inspire&api_key=' + api_token)
-    print(r.content)
     data = r.json()
     
     if r.status_code != 200:
-        print(data['message'])
         error_msg = 'An error occured while calling ' + data['message']
         raise(error_msg)
     return data
@@ -17,7 +15,6 @@ def get_qod():
 
 def makeFileForQOD(contents):
     quote = contents['quotes'][0]
-    print(quote)
     quote_id = quote['id']
     author = quote['author']
     quote_text = quote['quote']
@@ -81,9 +78,9 @@ def makeFileForQOD(contents):
 
 
 def process():
-   
+    # get quote of the day
     qod = get_qod()
- 
+    # make html file that can be viewed by the user
     makeFileForQOD(qod['contents'])
 
 process()
